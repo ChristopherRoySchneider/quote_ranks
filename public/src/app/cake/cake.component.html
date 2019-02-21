@@ -1,0 +1,40 @@
+<h3>Comments for {{ cakeToEdit.bakerName }}'s cake:</h3>
+<p>Average Rating: {{avgRating | number}} Stars</p>
+<div *ngFor="let rating of cakeToEdit.ratings">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{rating.stars}} Stars</h5>
+      <p class="card-text">{{rating.comment}}</p>
+    </div>
+  </div>
+</div>
+
+<h3>Edit Cake</h3>
+<form (submit)="putCake(cakeToEdit)">
+  <!-- use the json pipe to see how newCake changes in real time -->
+
+  <div class="form-group">
+    <label for="cakeToEdit.bakerName">Title</label>
+    <input
+      class="form-control"
+      type="text"
+      id="cakeToEdit.bakerName"
+      name="cakeToEdit.bakerName"
+      [(ngModel)]="cakeToEdit.bakerName"
+    />
+  </div>
+  <div class="form-group">
+    <label for="cakeToEdit.imageUrl">Description</label>
+    <input
+      class="form-control"
+      type="text"
+      id="cakeToEdit.imageUrl"
+      name="cakeToEdit.imageUrl"
+      [(ngModel)]="cakeToEdit.imageUrl"
+    />
+  </div>
+
+
+  <input class="btn btn-primary" type="submit" value="Update Cake" />
+</form>
+<p>{{ cakeToEdit | json }}</p>

@@ -1,0 +1,10 @@
+npm init -y
+npm install express --save
+npm install ejs --save
+npm install body-parser --save
+npm install mongoose --save
+npm install --save express-flash
+npm install express-session --save
+npm install --save bcrypt
+npm install --save mongoose-unique-validator
+npm install validator --save

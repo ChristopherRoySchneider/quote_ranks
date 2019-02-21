@@ -1,0 +1,129 @@
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-8 col-s-12 ">
+      <h3>All The Cakes</h3>
+      <div *ngIf="cakes.length > 0">
+        <div *ngFor="let cake of cakes">
+          <div class="card mt-2 mb-2">
+            <div class="card-body">
+              <h5 class="card-title">Baked By {{ cake.bakerName }}</h5>
+              <img
+                class="card-img-top"
+                src="{{ cake.imageUrl }}"
+                alt="Card image cap"
+              />
+
+              <div *ngIf="showCakeEditFormId==cake._id">
+                <form (submit)="onSubmitRating(newRating, cake._id)">
+                  <!-- use the json pipe to see how newCake changes in real time -->
+                  <div class="row">
+                    <div class="form-group col-3">
+                      <label for="newRating.stars">Rating</label>
+                      <select
+                        class="form-control"
+                        id="newRating.stars"
+                        name="newRating.stars"
+                        [(ngModel)]="newRating.stars"
+                      >
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Star</option>
+                        <option value="3">3 Star</option>
+                        <option value="4">4 Star</option>
+                        <option value="5">5 Star</option>
+                      </select>
+                    </div>
+                    <div class="col-9 form-group">
+                      <label for="newRating.comment">Comment</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="newRating.comment"
+                        name="newRating.comment"
+                        [(ngModel)]="newRating.comment"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <input
+                        type="hidden"
+                        id="newRating.cakeId"
+                        name="newRating.cakeId"
+                        [value]="cake._id"
+                      />
+
+                      <input
+                        class="btn btn-primary"
+                        type="submit"
+                        value="Rate"
+                      />
+                    </div>
+                  </div>
+                </form>
+                <p>{{ newRating | json }}</p>
+              </div>
+
+              <button *ngIf="cake._id!=showCakeEditFormId"
+                class="m-2 btn btn-primary"
+                (click)="showRatingForm(cake._id)"
+              >
+                Rate
+              </button>
+              <button
+                class="m-2 btn btn-primary"
+                (click)="onButtonClickCake(cake._id)"
+              >
+                View Details
+              </button>
+
+              <button
+                class="m-2 btn btn-primary"
+                (click)="deleteCake(cake._id)"
+              >
+                delete Cake
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-s-12">
+      <h3>New Cake</h3>
+      <form (submit)="onSubmit(newCake)">
+        <!-- use the json pipe to see how newCake changes in real time -->
+
+        <div class="form-group">
+          <label for="newCake.bakerName">Baker Name</label>
+          <input
+            class="form-control"
+            type="text"
+            id="newCake.bakerName"
+            name="newCake.bakerName"
+            [(ngModel)]="newCake.bakerName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="newCake.imageUrl">Image Url</label>
+          <input
+            class="form-control"
+            type="text"
+            id="newCake.imageUrl"
+            name="newCake.imageUrl"
+            [(ngModel)]="newCake.imageUrl"
+          />
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Create Cake" />
+      </form>
+      <p>{{ newCake | json }}</p>
+      <app-cake
+        *ngIf="cakeToEdit.bakerName || !cakeToEdit.bakerName == ''"
+        [cakeToEdit]="cakeToEdit"
+        (aCakeEventEmitter)="dataFromChild($event)"
+      >
+      </app-cake>
+    </div>
+  </div>
+  <!--The content below is only a placeholder and can be replaced.-->
+</div>
